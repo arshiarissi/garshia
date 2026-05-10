@@ -1,7 +1,7 @@
 FROM debian:bookworm-slim
 
 COPY install.sh /app/install.sh
-COPY verify.sh /app/verify.sh
+COPY config.json /etc/config.json.template
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -9,14 +9,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN chmod +x /app/install.sh && /app/install.sh
-RUN chmod +x /app/verify.sh
 
-COPY config.json /etc/config.json
+RUN echo 'alias xray-status="/app/verify.sh"' >> /etc/bash.bashrc
+RUN echo 'alias xray-restart="pkill xray && /usr/local/bin/xray -c /etc/config.json > /tmp/xray.log 2>&1 & && echo \"✅ Xray restarted\""' >> /etc/bash.bashrc
+RUN echo 'alias xray-link="[ -f /app/uuid.txt ] && [ -f /app/selected_ip.txt ] && echo \"vless://$(cat /app/uuid.txt)@$(cat /app/selected_ip.txt):443?encryption=none&security=tls&type=xhttp&mode=packet-up&sni=${CODESPACE_NAME}-443.app.github.dev&path=%2F#ghtun\" || echo \"❌ Config not found\""' >> /etc/bash.bashrc
 
-RUN cat >> /etc/bash.bashrc <<'EOF'
-echo -e "\n✅ VLESS LINK:\nvless://550e8400-e29b-41d4-a716-446655440000@94.130.50.12:443?encryption=none&security=tls&type=xhttp&mode=packet-up&sni=${CODESPACE_NAME}-443.app.github.dev&path=%2F#ghtun"
-
-/app/verify.sh
+RUN cat > /etc/logrotate.d/xray <<'EOF'
+/tmp/xray.log /tmp/xray_error.log {
+    daily; rotate 3; size 10M; compress; delaycompress; missingok; notifempty; create 644 root root
+}
 EOF
 
-CMD ["/usr/local/bin/xray", "-c", "/etc/config.json"]
+CMD ["/app/start.sh"]

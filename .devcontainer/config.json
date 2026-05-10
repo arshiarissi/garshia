@@ -4,11 +4,7 @@
       "port": 443,
       "protocol": "vless",
       "settings": {
-        "clients": [
-          {
-            "id": "550e8400-e29b-41d4-a716-446655440000"
-          }
-        ],
+        "clients": [{"id": "__UUID__"}],
         "decryption": "none"
       },
       "streamSettings": {
@@ -20,9 +16,10 @@
       }
     }
   ],
-  "outbounds": [
-    {
-      "protocol": "freedom"
-    }
-  ]
+  "outbounds": [{"protocol": "freedom"}],
+  "log": {
+    "loglevel": "warning",
+    "access": "/tmp/xray.log",
+    "error": "/tmp/xray_error.log"
+  }
 }
