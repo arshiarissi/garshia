@@ -2,6 +2,7 @@ FROM debian:bookworm-slim
 
 COPY install.sh /app/install.sh
 COPY config.json /etc/config.json.template
+COPY start.sh /app/start.sh
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -9,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN chmod +x /app/install.sh && /app/install.sh
+RUN chmod +x /app/start.sh
 
 RUN echo 'alias xray-status="/app/verify.sh"' >> /etc/bash.bashrc
 RUN echo 'alias xray-restart="pkill xray && /usr/local/bin/xray -c /etc/config.json > /tmp/xray.log 2>&1 & && echo \"✅ Xray restarted\""' >> /etc/bash.bashrc
