@@ -67,7 +67,7 @@ Based on your local ping test earlier, which server was reachable?
 
   1) Germany  - 94.130.50.12
   2) USA      - 63.141.252.203
-  3) Netherlands - 50.7.5.83
+  3) Ireland - 50.7.5.83
 
 Enter choice [1-3]: 
 ```
