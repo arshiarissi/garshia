@@ -110,7 +110,7 @@ echo "Based on your local ping test earlier, which server was reachable?"
 echo ""
 echo "  1) Germany  - 94.130.50.12"
 echo "  2) USA      - 63.141.252.203"
-echo "  3) Netherlands - 50.7.5.83"
+echo "  3) Ireland - 50.7.5.83"
 echo ""
 
 while true; do
@@ -172,4 +172,4 @@ LOGROTEOF
 
 RUN sed -i '/vless:\/\//d' /etc/bash.bashrc 2>/dev/null || true
 
-ENTRYPOINT ["/app/start.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "/app/start.sh & exec \"$@\"", "--"]
