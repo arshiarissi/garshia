@@ -156,6 +156,25 @@ vless://550e8400-e29b-41d4-a716-446655440000@94.130.50.12:443?encryption=none&se
 
 ---
 
+## 💰 GitHub Codespaces Billing
+
+> [!CAUTION]
+> **This tunnel consumes your GitHub Codespaces free hours!**
+
+- **Free tier:** 120 core-hours/month
+- **This config:** 2 CPU cores = **2 core-hours per hour** of use
+- **You get ~60 hours free per month** (2 hours/day)
+- **Overage:** $0.18 per core-hour (~$0.36/hour after free limit)
+
+**Always stop your Codespace when done:**
+```bash
+gh codespace stop -c $CODESPACE_NAME
+```
+
+**Check usage:** https://github.com/settings/billing
+
+---
+
 ## 🐛 Troubleshooting
 
 ### "No reachable servers" during ping test
