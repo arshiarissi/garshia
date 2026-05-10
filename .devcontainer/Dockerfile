@@ -92,6 +92,7 @@ set -e
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
 
+# Check if already configured
 if [ -f /etc/config.json ] && [ -f /app/uuid.txt ] && [ -f /app/selected_ip.txt ]; then
     echo -e "${GREEN}✅ Already configured. Starting Xray...${NC}"
     /usr/local/bin/xray -c /etc/config.json > /tmp/xray.log 2>&1 &
@@ -171,4 +172,4 @@ LOGROTEOF
 
 RUN sed -i '/vless:\/\//d' /etc/bash.bashrc 2>/dev/null || true
 
-CMD ["/app/start.sh"]
+ENTRYPOINT ["/app/start.sh"]
