@@ -1,5 +1,5 @@
 {
-  "name": "ghtun",
+  "name": "GH-Tun",
   "build": {
     "dockerfile": "./Dockerfile",
     "context": "."
@@ -8,12 +8,8 @@
     "ghcr.io/devcontainers/features/common-utils:2": {"installZsh": false},
     "ghcr.io/devcontainers/features/github-cli:1": {"version": "latest"}
   },
-  "initializeCommand": "echo '⚠️  Make sure you tested which IP works on your local network first!'",
   "postAttachCommand": {
     "public": "gh codespace ports visibility 443:public -c $CODESPACE_NAME"
-  },
-  "containerEnv": {
-    "ALLOWED_IPS": "94.130.50.12,63.141.252.203,50.7.5.83"
   },
   "portsAttributes": {
     "443": {
